@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="61782a9b-d5f7-4cf4-b659-c148d4753614" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="51a56821-c75a-4fc4-9768-bf18527fd347" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="9674caa9-555a-4460-8a0e-edee9cd55d70" />
+	<flow name="fileFlow" doc:id="1f18cdcd-9094-4dfc-a546-455389000ac5" >
+		<http:listener doc:name="Listener" doc:id="4cc4424a-84b8-4f11-8dd2-fcd8437b0904" config-ref="HTTP_Listener_config" path="/file"/>
+		<file:create-directory doc:name="Create directory" doc:id="db587c7e-d3a1-493b-8685-37defb78f43b" config-ref="File_Config1" directoryPath="C:\Users\SrikanthDowpati\Desktop"/>
+	</flow>
+</mule>
