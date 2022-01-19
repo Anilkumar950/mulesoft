@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ftp http://www.mulesoft.org/schema/mule/ftp/current/mule-ftp.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="70e1a19a-911e-4512-b6e5-96cadfba342d" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="2fe9fcdb-cd8c-4e25-9bbb-231f1cccb429" />
+	<flow name="filerenameFlow" doc:id="1f68af2f-cd07-4ae6-bb75-fdd911bb14b6" >
+		<http:listener doc:name="Listener" doc:id="92415e43-8620-401e-ae4a-b2c77ce4d0c7" config-ref="HTTP_Listener_config" path="filerename"/>
+		<file:rename doc:name="Rename" doc:id="106a3415-94eb-4379-980f-475909ac53ab" config-ref="File_Config" path="C:\Users\SrikanthDowpati\Desktop\FileOpe" to="FileOperations"/>
+		<logger level="INFO" doc:name="Logger" doc:id="38a47367-2baf-47da-ae30-fe9ff2400ab6" message="File Name Renamed Successully You can their"/>
+	</flow>
+</mule>
