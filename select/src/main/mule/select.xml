@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="1c342fcd-f443-40e1-82f5-f327ffd80530" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="root" database="studb" />
+	</db:config>
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="57d5e24e-b026-4a03-87cf-98d8b440e1b6" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="selectFlow" doc:id="d1a49081-bcf7-4aff-bb3d-78b8b5547c80" >
+		<http:listener doc:name="Listener" doc:id="40568ea6-3a9b-4354-b18d-8f734841b7a5" config-ref="HTTP_Listener_config" path="fetch"/>
+		<db:select doc:name="Select" doc:id="eb54dcf5-a567-4b7d-b94a-64dea7374a24" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from studata WHERE stuid =14;]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="81f9a523-c703-4b59-a883-abcaf87d7eaf" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="8b796ade-f758-4579-8f58-156a38fa8ffe" message="#[payload]"/>
+	</flow>
+</mule>
